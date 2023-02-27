@@ -1,26 +1,33 @@
 version: "3"
 
 x-uffizzi:
+  
   ingress:
-    service: pgadmin
-    port: 8081
+    service: nginx
+    port: 8082
 
 
 services:
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx-uffizzi:/etc/nginx
 
   postgres:
     image: postgres
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=root
+      - POSTGRES_DB=iris
       - PGDATA=/tmp
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data/
+      - ./uffizzi-db-script/:/docker-entrypoint-initdb.d/
     deploy:
       resources:
         limits:
-          memory: 250M
+          memory: 500M
 
   pgadmin:
    image: "${PGADMIN_IMAGE}"
