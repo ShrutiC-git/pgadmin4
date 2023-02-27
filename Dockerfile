@@ -171,7 +171,7 @@ ENV PYTHONPATH=/pgadmin4
 
 # Copy in the code and docs
 COPY --from=app-builder /pgadmin4/web /pgadmin4
-COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
+# COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
 COPY pkg/docker/run_pgadmin.py /pgadmin4
 COPY pkg/docker/gunicorn_config.py /pgadmin4
 COPY pkg/docker/entrypoint.sh /entrypoint.sh
