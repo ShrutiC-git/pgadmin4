@@ -1,18 +1,12 @@
-version: "3"
+version: "3.8"
 
 x-uffizzi:
   
   ingress:
-    service: nginx
-    port: 8082
-
+    service: pgadmin
+    port: 8081
 
 services:
-
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./nginx-uffizzi:/etc/nginx
 
   postgres:
     image: postgres
@@ -27,14 +21,14 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500M
+          memory: 1000M
 
   pgadmin:
    image: "${PGADMIN_IMAGE}"
    deploy:
       resources:
         limits:
-          memory: 250M
+          memory: 1000M
    environment:
      - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=False
      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
