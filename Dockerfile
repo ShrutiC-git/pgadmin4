@@ -100,7 +100,7 @@ COPY web /pgadmin4/web
 RUN rm -rf /pgadmin4/docs/en_US/_build
 
 # Build the docs
-RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 /venv/bin/sphinx-build /pgadmin4/docs/en_US /pgadmin4/docs/en_US/_build/html
+# RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 /venv/bin/sphinx-build /pgadmin4/docs/en_US /pgadmin4/docs/en_US/_build/html
 
 # Cleanup unwanted files
 RUN rm -rf /pgadmin4/docs/en_US/_build/html/.doctrees
@@ -171,7 +171,7 @@ ENV PYTHONPATH=/pgadmin4
 
 # Copy in the code and docs
 COPY --from=app-builder /pgadmin4/web /pgadmin4
-COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
+# COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
 COPY pkg/docker/run_pgadmin.py /pgadmin4
 COPY pkg/docker/gunicorn_config.py /pgadmin4
 COPY pkg/docker/entrypoint.sh /entrypoint.sh
@@ -191,6 +191,7 @@ RUN apk add \
         sudo \
         libedit \
         libldap \
+        libpq-dev \
         libcap && \
     /venv/bin/python3 -m pip install --no-cache-dir gunicorn && \
     find / -type d -name '__pycache__' -exec rm -rf {} + && \
